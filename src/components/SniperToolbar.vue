@@ -4,7 +4,7 @@
     dense
     fixed
     clipped-left
-    color="success"
+    color="darkGreen"
   >
     <v-toolbar-side-icon
       @click.stop="toggleAppDrawer('Toggling Drawer')"
@@ -21,20 +21,26 @@
     </v-toolbar-title>
     <v-spacer />
     <v-tooltip bottom>
-      <v-btn icon slot="activator" @click="$router.push({ name: 'Home' })">
-        <v-icon>gps_fixed</v-icon>
+      <v-btn icon slot="activator"
+        @click="$router.push({ name: 'Home' });highlightRouteIcon()"
+      >
+        <v-icon :class="{'yellow--text': activeRoute === '/'}">gps_fixed</v-icon>
       </v-btn>
       <span>Home</span>
     </v-tooltip>
     <v-tooltip bottom>
-      <v-btn icon slot="activator" @click="$router.push({ name: 'StockLookup' })">
-        <v-icon>search</v-icon>
+      <v-btn icon slot="activator"
+        @click="$router.push({ name: 'StockLookup' });highlightRouteIcon()"
+      >
+        <v-icon :class="{'yellow--text': activeRoute === '/StockLookup'}">search</v-icon>
       </v-btn>
       <span>Stock Lookup</span>
     </v-tooltip>
     <v-tooltip bottom>
-      <v-btn icon slot="activator" @click="$router.push({ name: 'ScanHistory' })">
-        <v-icon>history</v-icon>
+      <v-btn icon slot="activator"
+        @click="$router.push({ name: 'ScanHistory' });highlightRouteIcon()"
+      >
+        <v-icon :class="{'yellow--text': activeRoute === '/ScanHistory'}">history</v-icon>
       </v-btn>
       <span>Scan History</span>
     </v-tooltip>
@@ -56,7 +62,7 @@ export default {
     return {
       accountAction: 'Log Out',
       highlighted: false,
-      activeRoute: 'Home'
+      activeRoute: ''
     }
   },
   computed: {
@@ -67,7 +73,18 @@ export default {
   methods: {
     ...mapActions([
       'toggleAppDrawer'
-    ])
+    ]),
+    currentPath () {
+      let path = this.$router.resolve(location)
+      return path.location.path
+    },
+    highlightRouteIcon () {
+      this.activeRoute = this.currentPath()
+      console.log(this.activeRoute)
+    }
+  },
+  mounted () {
+    this.highlightRouteIcon()
   }
 }
 </script>
