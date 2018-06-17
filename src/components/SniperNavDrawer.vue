@@ -1,8 +1,18 @@
 <template>
-  <v-navigation-drawer app></v-navigation-drawer>
+  <v-navigation-drawer
+    :value="getAppDrawer"
+    app
+    fixed
+    stateless
+    clipped
+    disable-resize-watcher
+  >
+  </v-navigation-drawer>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'SniperNavDrawer',
   components: {
@@ -12,6 +22,11 @@ export default {
     return {
 
     }
+  },
+  computed: {
+    ...mapGetters([
+      'getAppDrawer'
+    ])
   },
   methods: {
 

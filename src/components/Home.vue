@@ -12,7 +12,7 @@ export default {
   },
   data () {
     return {
-      title: 'Trade Sniper'
+      title: 'Home'
     }
   },
   methods: {

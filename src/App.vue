@@ -1,5 +1,8 @@
 <template>
-  <v-app>
+  <v-app
+    id="trade_sniper"
+    dark
+  >
     <sniper-nav-drawer />
     <sniper-toolbar />
     <v-content>
