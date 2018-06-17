@@ -8,6 +8,7 @@ import {
   Vuetify,
   VApp,
   VTooltip,
+  VTextField,
   VNavigationDrawer,
   VFooter,
   VList,
@@ -23,6 +24,7 @@ Vue.use(Vuetify, {
   components: {
     VApp,
     VTooltip,
+    VTextField,
     VNavigationDrawer,
     VFooter,
     VList,

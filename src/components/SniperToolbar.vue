@@ -15,7 +15,7 @@
       @mouseover="highlighted = true"
       @mouseout="highlighted = false"
       :class = "{'yellow--text': highlighted, 'white--text': !highlighted}"
-      @click="$router.push({ name: 'Home' })"
+      @click="$router.push({ name: 'Home' }); highlightRouteIcon()"
     >
       {{ getAppTitle }}
     </v-toolbar-title>

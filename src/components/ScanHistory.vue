@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto my-2 display-1 text-xs-center">
+  <div class="mx-auto my-2 display-1 text-xs-center yellow--text">
     {{ title }}
   </div>
 </template>
