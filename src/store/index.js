@@ -74,6 +74,14 @@ const store = new Vuex.Store({
               {
                 label: 'Price',
                 borderColor: '#3ac1f2',
+                pointBorderColor: 'yellow',
+                borderWidth: 2,
+                pointBorderWidth: 1,
+                pointRadius: 2,
+                pointHoverRadius: 8,
+                showLine: true,
+                spanGaps: true,
+                pointHoverBackgroundColor: 'green',
                 data: []
               }
               // {
