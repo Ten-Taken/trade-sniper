@@ -9,11 +9,18 @@ const store = new Vuex.Store({
   strict: true,
   state: {
     appTitle: process.env.APP_TITLE,
-    appDrawer: false
+    appDrawer: false,
+    stockChartData: {},
+    stockChartOptions: {
+      responsive: true,
+      maintainAspectRatio: false
+    }
   },
   getters: {
     getAppDrawer: state => { return state.appDrawer },
-    getAppTitle: state => { return state.appTitle }
+    getAppTitle: state => { return state.appTitle },
+    getStockChartData: state => { return state.stockChartData },
+    getStockChartOptions: state => { return state.stockChartOptions }
   },
   mutations: {
     TOGGLE_APP_DRAWER (state, toggle) {
