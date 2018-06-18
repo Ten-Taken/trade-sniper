@@ -6,8 +6,8 @@
     <br />
     <v-layout column>
       <v-flex>
-        <v-layout row>
-          <v-flex xs12 md2 offset-md5>
+        <v-layout row wrap>
+          <v-flex xs4 md2 offset-xs1 offset-md5>
             <v-text-field
               v-model="tickerSymbol"
               name="input-2-3"
@@ -20,14 +20,20 @@
               single-line
             ></v-text-field>
           </v-flex>
-          <v-flex xs12 md2>
+          <v-flex xs2 offset-xs1 offset-md0>
             <v-btn
+              class="mx-auto"
               @click="lookupTicker(tickerSymbol)"
               small
               color="success"
             >Go</v-btn>
           </v-flex>
+          <v-flex xs10 offset-xs1>
+            <stock-lookup-table />
+          </v-flex>
         </v-layout>
+        <br />
+        <br />
       </v-flex>
       <v-flex>
         <price-chart :key="getRedrawStockChart" :chartData="getPriceChartData" :options="getPriceChartOptions"/>
@@ -42,13 +48,15 @@
 <script>
 import PriceChart from '@/components/PriceChart'
 import VolumeChart from '@/components/VolumeChart'
+import StockLookupTable from '@/components/StockLookupTable'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'StockLookup',
   components: {
     PriceChart,
-    VolumeChart
+    VolumeChart,
+    StockLookupTable
   },
   data () {
     return {

@@ -108,6 +108,11 @@ const store = new Vuex.Store({
                 backgroundColor: '#b23ac4',
                 data: []
               }
+              // {
+              //   label: '# of Trades',
+              //   backgroundColor: '#red',
+              //   data: []
+              // }
             ]
           }
           for (var i = 0; i < response.data.length; i++) {
@@ -115,6 +120,7 @@ const store = new Vuex.Store({
             volumeInfo.labels.push(response.data[i].label)
             priceInfo.datasets[0].data.push(response.data[i].open)
             volumeInfo.datasets[0].data.push(response.data[i].volume)
+            // volumeInfo.datasets[1].data.push(response.data[i].numberOfTrades)
           }
           context.commit('UPDATE_PRICE_CHART_DATA', priceInfo)
           context.commit('UPDATE_VOLUME_CHART_DATA', volumeInfo)
