@@ -9,6 +9,7 @@
         <v-layout row>
           <v-flex xs12 md2 offset-md5>
             <v-text-field
+              v-model="tickerSymbol"
               name="input-2-3"
               clearable
               label="Search"
@@ -19,10 +20,17 @@
               single-line
             ></v-text-field>
           </v-flex>
+          <v-flex xs12 md2>
+            <v-btn
+              @click="lookupTicker(tickerSymbol)"
+              small
+              color="success"
+            >Go</v-btn>
+          </v-flex>
         </v-layout>
       </v-flex>
       <v-flex>
-        <stock-chart :chartData="getStockChartData" :options="getStockChartOptions"/>
+        <stock-chart :key="getRedrawStockChart" :chartData="getStockChartData" :options="getStockChartOptions"/>
       </v-flex>
     </v-layout>
   </div>
@@ -30,7 +38,7 @@
 
 <script>
 import StockChart from '@/components/StockChart'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'StockLookup',
@@ -39,17 +47,21 @@ export default {
   },
   data () {
     return {
-      title: 'Stock Lookup'
+      title: 'Stock Lookup',
+      tickerSymbol: ''
     }
   },
   computed: {
     ...mapGetters([
       'getStockChartData',
-      'getStockChartOptions'
+      'getStockChartOptions',
+      'getRedrawStockChart'
     ])
   },
   methods: {
-
+    ...mapActions([
+      'lookupTicker'
+    ])
   }
 }
 </script>
