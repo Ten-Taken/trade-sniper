@@ -53,14 +53,8 @@ const store = new Vuex.Store({
         console.log('App Drawer Closed.')
       }
     },
-    UPDATE_STOCK_CHART_DATA (state, stockData) {
-      for (var i = 0; i < stockData.length; i++) {
-        state.stockChartData.labels.push(stockData[i].label)
-        // price "open" per result
-        state.stockChartData.datasets[0].data.push(stockData[i].open)
-        // volume per result
-        // state.stockChartData.datasets[1].data.push(stockData[i].volume)
-      }
+    UPDATE_STOCK_CHART_DATA (state, stockInfo) {
+      state.stockChartData = stockInfo
       console.log('Triggering Chart Re-render')
       state.redrawStockChart += 1
     }
@@ -74,7 +68,27 @@ const store = new Vuex.Store({
       console.log('Querying symbol: ' + tickerSymbol)
       iexTradingAPI.get('/stock/' + tickerSymbol + '/chart/1d')
         .then(function (response) {
-          context.commit('UPDATE_STOCK_CHART_DATA', response.data)
+          let stockInfo = {
+            labels: [],
+            datasets: [
+              {
+                label: 'Price',
+                borderColor: '#3ac1f2',
+                data: []
+              }
+              // {
+              //   label: 'Volume / 100',
+              //   borderColor: '#b23ac4',
+              //   data: []
+              // }
+            ]
+          }
+          for (var i = 0; i < response.data.length; i++) {
+            stockInfo.labels.push(response.data[i].label)
+            stockInfo.datasets[0].data.push(response.data[i].open)
+            // stockInfo.datasets[1].data.push(1 + ((response.data[i].volume) / 100))
+          }
+          context.commit('UPDATE_STOCK_CHART_DATA', stockInfo)
         })
         .catch(function (error) {
           console.log(error)
