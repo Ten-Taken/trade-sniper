@@ -3,7 +3,7 @@
 import { Line, mixins } from 'vue-chartjs'
 
 export default {
-  name: 'StockChart',
+  name: 'PriceChart',
   extends: Line,
   mixins: [mixins.reactiveProp],
   props: ['chartData', 'options'],

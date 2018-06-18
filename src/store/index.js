@@ -17,14 +17,23 @@ const store = new Vuex.Store({
     appTitle: process.env.APP_TITLE,
     appDrawer: false,
     redrawStockChart: 0,
-    stockChartData: {
+    priceChartData: {
       labels: [],
       datasets: [
         {
           label: 'Price',
           borderColor: '#3ac1f2',
           data: []
-        },
+        }
+      ]
+    },
+    priceChartOptions: {
+      responsive: true,
+      maintainAspectRatio: false
+    },
+    volumeChartData: {
+      labels: [],
+      datasets: [
         {
           label: 'Volume',
           borderColor: '#b23ac4',
@@ -32,7 +41,7 @@ const store = new Vuex.Store({
         }
       ]
     },
-    stockChartOptions: {
+    volumeChartOptions: {
       responsive: true,
       maintainAspectRatio: false
     }
@@ -40,8 +49,10 @@ const store = new Vuex.Store({
   getters: {
     getAppDrawer: state => { return state.appDrawer },
     getAppTitle: state => { return state.appTitle },
-    getStockChartData: state => { return state.stockChartData },
-    getStockChartOptions: state => { return state.stockChartOptions },
+    getPriceChartData: state => { return state.priceChartData },
+    getPriceChartOptions: state => { return state.priceChartOptions },
+    getVolumeChartData: state => { return state.volumeChartData },
+    getVolumeChartOptions: state => { return state.volumeChartOptions },
     getRedrawStockChart: state => { return state.redrawStockChart }
   },
   mutations: {
@@ -53,10 +64,13 @@ const store = new Vuex.Store({
         console.log('App Drawer Closed.')
       }
     },
-    UPDATE_STOCK_CHART_DATA (state, stockInfo) {
-      state.stockChartData = stockInfo
+    UPDATE_PRICE_CHART_DATA (state, priceInfo) {
+      state.priceChartData = priceInfo
       console.log('Triggering Chart Re-render')
       state.redrawStockChart += 1
+    },
+    UPDATE_VOLUME_CHART_DATA (state, volumeInfo) {
+      state.volumeChartData = volumeInfo
     }
   },
   actions: {
@@ -68,7 +82,7 @@ const store = new Vuex.Store({
       console.log('Querying symbol: ' + tickerSymbol)
       iexTradingAPI.get('/stock/' + tickerSymbol + '/chart/1d')
         .then(function (response) {
-          let stockInfo = {
+          let priceInfo = {
             labels: [],
             datasets: [
               {
@@ -84,19 +98,26 @@ const store = new Vuex.Store({
                 pointHoverBackgroundColor: 'green',
                 data: []
               }
-              // {
-              //   label: 'Volume / 100',
-              //   borderColor: '#b23ac4',
-              //   data: []
-              // }
+            ]
+          }
+          let volumeInfo = {
+            labels: [],
+            datasets: [
+              {
+                label: 'Volume',
+                backgroundColor: '#b23ac4',
+                data: []
+              }
             ]
           }
           for (var i = 0; i < response.data.length; i++) {
-            stockInfo.labels.push(response.data[i].label)
-            stockInfo.datasets[0].data.push(response.data[i].open)
-            // stockInfo.datasets[1].data.push(1 + ((response.data[i].volume) / 100))
+            priceInfo.labels.push(response.data[i].label)
+            volumeInfo.labels.push(response.data[i].label)
+            priceInfo.datasets[0].data.push(response.data[i].open)
+            volumeInfo.datasets[0].data.push(response.data[i].volume)
           }
-          context.commit('UPDATE_STOCK_CHART_DATA', stockInfo)
+          context.commit('UPDATE_PRICE_CHART_DATA', priceInfo)
+          context.commit('UPDATE_VOLUME_CHART_DATA', volumeInfo)
         })
         .catch(function (error) {
           console.log(error)

@@ -30,20 +30,25 @@
         </v-layout>
       </v-flex>
       <v-flex>
-        <stock-chart :key="getRedrawStockChart" :chartData="getStockChartData" :options="getStockChartOptions"/>
+        <price-chart :key="getRedrawStockChart" :chartData="getPriceChartData" :options="getPriceChartOptions"/>
+      </v-flex>
+      <v-flex>
+        <volume-chart :key="getRedrawStockChart" :chartData="getVolumeChartData" :options="getVolumeChartOptions"/>
       </v-flex>
     </v-layout>
   </div>
 </template>
 
 <script>
-import StockChart from '@/components/StockChart'
+import PriceChart from '@/components/PriceChart'
+import VolumeChart from '@/components/VolumeChart'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'StockLookup',
   components: {
-    StockChart
+    PriceChart,
+    VolumeChart
   },
   data () {
     return {
@@ -53,8 +58,10 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'getStockChartData',
-      'getStockChartOptions',
+      'getPriceChartData',
+      'getPriceChartOptions',
+      'getVolumeChartData',
+      'getVolumeChartOptions',
       'getRedrawStockChart'
     ])
   },
